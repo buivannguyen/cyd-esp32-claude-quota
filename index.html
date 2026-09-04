@@ -33,6 +33,7 @@
   }
   .note { font-size: 13px; color: #8B8794; max-width: 480px; }
   a { color: #D97757; }
+  code { background: #2A2633; padding: 2px 6px; border-radius: 4px; }
 </style>
 </head>
 <body>
@@ -46,15 +47,26 @@
   </esp-web-install-button>
 
   <div class="steps">
-    <p><b>Sau khi nạp xong:</b></p>
+    <p><b>Chưa có board?</b></p>
+    <p>Mua board ESP32 CYD (ESP32-2432S028R) tại <a href="https://s.shopee.vn/8KpFFpuR4g">Shopee</a>.</p>
+
+    <p><b>Lấy Claude token:</b></p>
+    <ol>
+      <li>Cài <a href="https://docs.claude.com/en/docs/claude-code/overview">Claude Code</a> trên máy tính.</li>
+      <li>Chạy lệnh <code>claude setup-token</code> rồi làm theo hướng dẫn để đăng nhập.</li>
+      <li>Sao chép token dạng <code>sk-ant-oat01-...</code> hiện ra (token sống ~1 năm).</li>
+    </ol>
+    <p class="note">Chạy lại <code>claude setup-token</code> lần nữa sẽ thu hồi token cũ, nên chỉ tạo khi cần.</p>
+
+    <p><b>Sau khi nạp firmware xong:</b></p>
     <ol>
       <li>Board sẽ phát WiFi mở tên <b>ESP32-CYD-Setup</b>.</li>
       <li>Nối điện thoại/máy tính vào WiFi đó, trang cấu hình sẽ tự mở (hoặc vào <code>http://192.168.4.1</code>).</li>
-      <li>Nhập tên + mật khẩu WiFi nhà và Claude token, bấm Lưu.</li>
+      <li>Nhập tên + mật khẩu WiFi nhà và Claude token vừa lấy, bấm Lưu.</li>
       <li>Board khởi động lại và hiển thị quota Claude.</li>
     </ol>
   </div>
 
-  <p class="note">Chi tiết cách dùng, tạo Claude token, và mã nguồn: <a href="https://github.com/buivannguyen/cyd-esp32-claude-quota">github.com/buivannguyen/cyd-esp32-claude-quota</a></p>
+  <p class="note">Chi tiết cách dùng và mã nguồn: <a href="https://github.com/buivannguyen/cyd-esp32-claude-quota">github.com/buivannguyen/cyd-esp32-claude-quota</a></p>
 </body>
 </html>
