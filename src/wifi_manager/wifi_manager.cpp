@@ -118,6 +118,7 @@ static void handle_save()
     String token = server.arg("token");
     ssid.trim();
     token.trim();
+    token.replace(" ", ""); // terminals sometimes wrap long tokens with a stray space
 
     bool changed = false;
 
