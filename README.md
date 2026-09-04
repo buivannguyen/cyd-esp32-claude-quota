@@ -1,5 +1,9 @@
 # esp32-cyd-claude-quota
 
+[**Flash firmware from your browser**](https://buivannguyen.github.io/cyd-esp32-claude-quota/) · [**Buy the board**](https://s.shopee.vn/8KpFFpuR4g)
+
+![ESP32 CYD running the quota dashboard](https://buivannguyen.github.io/cyd-esp32-claude-quota/esp32-claude-quota.png)
+
 Shows **Claude quota usage** (5h / 7d windows), **clock**, and **temperature** on an **ESP32 CYD** board (ESP32-2432S028R, 240×320 ILI9341). PlatformIO + Arduino + LVGL 9.
 
 The board connects to WiFi, calls `api.anthropic.com` directly with an OAuth token, reads the rate-limit headers, and draws two % bars. Clock comes from NTP, temperature from Open-Meteo (no API key needed).
@@ -56,7 +60,7 @@ The numbers live **in the response headers**, not the body:
 
 ## Hardware (hardcoded in `src/display/display.h`)
 
-Board: ESP32 CYD (ESP32-2432S028R) - [buy link](https://s.shopee.vn/8KpFFpuR4g)
+Board: ESP32 CYD (ESP32-2432S028R)
 
 ![ESP32 CYD board](https://down-vn.img.susercontent.com/file/cn-11134207-7r98o-lzavtfbcpm029c.webp)
 
