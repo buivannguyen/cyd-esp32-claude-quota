@@ -1,0 +1,6 @@
+# ESP32 CYD - flash 4 MB
+# Một app duy nhất (không OTA) + NVS để lưu cấu hình (wifi, ...). Không filesystem.
+# Giữ nguyên offset/size của nvs khi chỉnh về sau để không mất dữ liệu đã lưu.
+# Name,   Type, SubType,  Offset,   Size,      Flags
+nvs,      data, nvs,      0x9000,   0x5000,
+app0,     app,  factory,  0x10000,  0x3F0000,
