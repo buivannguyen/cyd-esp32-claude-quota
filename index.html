@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nạp firmware ESP32 CYD - Claude Quota Monitor</title>
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js"></script>
+<style>
+  :root { color-scheme: dark; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #0B0B0C;
+    color: #FBFAF7;
+    margin: 0;
+    padding: 48px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  h1 { font-size: 22px; margin: 0 0 8px; }
+  p { color: #D9D6DF; max-width: 480px; line-height: 1.6; }
+  .steps { text-align: left; color: #D9D6DF; max-width: 480px; line-height: 1.7; }
+  esp-web-install-button { margin: 28px 0; }
+  esp-web-install-button button {
+    font-size: 16px;
+    padding: 12px 24px;
+    border: 0;
+    border-radius: 8px;
+    background: #D97757;
+    color: #fff;
+    cursor: pointer;
+  }
+  .note { font-size: 13px; color: #8B8794; max-width: 480px; }
+  a { color: #D97757; }
+</style>
+</head>
+<body>
+  <h1>ESP32 CYD - Claude Quota Monitor</h1>
+  <p>Cắm board ESP32 CYD vào máy tính bằng cáp USB, mở trang này bằng <b>Chrome</b> hoặc <b>Edge</b> trên máy tính, rồi bấm nút bên dưới để nạp firmware trực tiếp từ trình duyệt.</p>
+
+  <esp-web-install-button manifest="manifest.json">
+    <button slot="activate">Nạp firmware</button>
+    <span slot="unsupported">Trình duyệt của bạn không hỗ trợ Web Serial. Hãy dùng Chrome hoặc Edge trên máy tính (không dùng được trên điện thoại).</span>
+    <span slot="not-allowed">Trang này cần mở qua HTTPS.</span>
+  </esp-web-install-button>
+
+  <div class="steps">
+    <p><b>Sau khi nạp xong:</b></p>
+    <ol>
+      <li>Board sẽ phát WiFi mở tên <b>ESP32-CYD-Setup</b>.</li>
+      <li>Nối điện thoại/máy tính vào WiFi đó, trang cấu hình sẽ tự mở (hoặc vào <code>http://192.168.4.1</code>).</li>
+      <li>Nhập tên + mật khẩu WiFi nhà và Claude token, bấm Lưu.</li>
+      <li>Board khởi động lại và hiển thị quota Claude.</li>
+    </ol>
+  </div>
+
+  <p class="note">Chi tiết cách dùng, tạo Claude token, và mã nguồn: <a href="https://github.com/buivannguyen/cyd-esp32-claude-quota">github.com/buivannguyen/cyd-esp32-claude-quota</a></p>
+</body>
+</html>

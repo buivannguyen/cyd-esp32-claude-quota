@@ -1,0 +1,13 @@
+{
+  "name": "ESP32 CYD - Claude Quota Monitor",
+  "version": "1.0.0",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "firmware/cyd-claude-quota.bin", "offset": 0 }
+      ]
+    }
+  ]
+}
