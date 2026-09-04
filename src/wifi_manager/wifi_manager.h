@@ -26,6 +26,9 @@ void wifi_manager_loop();
 // true once connected to WiFi (STA).
 bool wifi_manager_connected();
 
+// true if a WiFi SSID is saved in NVS, regardless of current connection state.
+bool wifi_manager_has_credentials();
+
 // Registers a callback for status updates (shown on screen).
 void wifi_manager_set_status_callback(wifi_status_cb_t cb);
 

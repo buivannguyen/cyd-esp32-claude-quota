@@ -5,6 +5,7 @@
 #include "assets/clawd_still.h"
 #include "wifi_manager/wifi_manager.h"
 #include "claude_quota/claude_quota.h"
+#include "claude_quota/claude_token_store.h"
 #include "weather/weather.h"
 
 // ---- Location config (change for your location) ----
@@ -29,6 +30,7 @@ static lv_obj_t *lbl_clock, *lbl_weather, *lbl_status;
 static lv_image_dsc_t mascot_dsc;
 
 struct quota_row {
+    lv_obj_t *card;
     lv_obj_t *bar;
     lv_obj_t *val;
     lv_obj_t *reset;
@@ -85,17 +87,17 @@ static lv_obj_t *make_pill(lv_obj_t *parent, const char *text)
 
 static void make_row(quota_row &r, lv_coord_t card_y, const char *pill_text)
 {
-    lv_obj_t *card = make_card(card_y);
+    r.card = make_card(card_y);
 
-    r.val = lv_label_create(card);
+    r.val = lv_label_create(r.card);
     lv_label_set_text(r.val, "--%");
     lv_obj_set_style_text_font(r.val, &lv_font_montserrat_22, 0);
     lv_obj_set_style_text_color(r.val, CL_TEXT, 0);
     lv_obj_set_pos(r.val, 0, 0);
 
-    make_pill(card, pill_text);
+    make_pill(r.card, pill_text);
 
-    r.bar = lv_bar_create(card);
+    r.bar = lv_bar_create(r.card);
     lv_obj_set_pos(r.bar, 0, BAR_Y);
     lv_obj_set_size(r.bar, CARD_W - 2 * CARD_PAD_X, 12);
     lv_bar_set_range(r.bar, 0, 100);
@@ -106,7 +108,7 @@ static void make_row(quota_row &r, lv_coord_t card_y, const char *pill_text)
     lv_obj_set_style_bg_color(r.bar, CL_GREEN, LV_PART_INDICATOR);
     lv_obj_set_style_radius(r.bar, 3, LV_PART_INDICATOR);
 
-    r.reset = lv_label_create(card);
+    r.reset = lv_label_create(r.card);
     lv_label_set_text(r.reset, "");
     lv_obj_set_style_text_font(r.reset, &lv_font_montserrat_16, 0);
     lv_obj_set_style_text_color(r.reset, CL_DIM, 0);
@@ -128,7 +130,7 @@ static void set_row(quota_row &r, int pct, int reset_min)
 
 static void set_status(const char *msg)
 {
-    char b[48];
+    char b[128]; // long enough for the AP setup instructions ("Vao WiFi ... roi mo http://...")
     snprintf(b, sizeof(b), "\xE2\x80\xA2 %s", msg); // "• msg"
     lv_label_set_text(lbl_status, b);
 }
@@ -227,6 +229,28 @@ void setup()
     lv_obj_set_style_text_color(lbl_status, CL_ACCENT, 0);
     lv_obj_align(lbl_status, LV_ALIGN_BOTTOM_MID, 0, -3);
     set_status("starting");
+
+    // No WiFi and/or token saved yet -> hide the dashboard and show only the
+    // setup instructions (driven by the same status callbacks below).
+    bool needs_setup = !wifi_manager_has_credentials() || !claude_token_has();
+    if (needs_setup) {
+        lv_obj_add_flag(mascot, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(lbl_clock, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(lbl_weather, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(row_5h.card, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(row_7d.card, LV_OBJ_FLAG_HIDDEN);
+
+        lv_obj_t *lbl_title = lv_label_create(g_root);
+        lv_label_set_text(lbl_title, "Setup");
+        lv_obj_set_style_text_font(lbl_title, &lv_font_montserrat_22, 0);
+        lv_obj_set_style_text_color(lbl_title, CL_TEXT, 0);
+        lv_obj_align(lbl_title, LV_ALIGN_CENTER, 0, -50);
+
+        lv_label_set_long_mode(lbl_status, LV_LABEL_LONG_WRAP);
+        lv_obj_set_width(lbl_status, CARD_W);
+        lv_obj_set_style_text_align(lbl_status, LV_TEXT_ALIGN_CENTER, 0);
+        lv_obj_align(lbl_status, LV_ALIGN_CENTER, 0, 10);
+    }
 
     lv_timer_handler();
     turn_on_display();

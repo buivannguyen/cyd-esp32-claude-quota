@@ -41,6 +41,14 @@ void wifi_manager_set_status_callback(wifi_status_cb_t cb) { status_cb = cb; }
 
 bool wifi_manager_connected() { return WiFi.status() == WL_CONNECTED; }
 
+bool wifi_manager_has_credentials()
+{
+    prefs.begin(NVS_WIFI, true); // RO
+    bool has = prefs.isKey("ssid") && prefs.getString("ssid", "").length() > 0;
+    prefs.end();
+    return has;
+}
+
 void wifi_manager_reset()
 {
     prefs.begin(NVS_WIFI, false);
